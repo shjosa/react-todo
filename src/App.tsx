@@ -1,26 +1,15 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 
 function App() {
+  const objArr = [{name: "eat", key: 0}, {name: "play elden ring :)", key: 1}, {name: "walk dogs", key: 2}, {name: "read", key: 3}]
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <ul>
+      {objArr.map((obj, i) => <li key={obj.key}>
+        {obj.name}
+      </li>)}
+    </ul>
+  )
 }
 
 export default App;
