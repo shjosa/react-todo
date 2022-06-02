@@ -17,6 +17,28 @@ function setTaskList(setArray: Array<Task>) {
   localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(setArray));
 }
 
+interface TodoListProps {
+  taskList: Array<Task>;
+  sectionName: string;
+  toggleCompleted: (key: number) => void;
+  removeFromArray: (key: number) => void;
+}
+
+function TodoList({ taskList, sectionName, toggleCompleted, removeFromArray }: TodoListProps) {
+  if (!taskList.length)
+    return null;
+  return <>
+    <h1>{sectionName}</h1>
+    <ul>
+      {taskList.map((obj, i) => <li key={obj.key}>
+        <input type="checkbox" onChange={() => toggleCompleted(obj.key)} checked={obj.isCompleted} />
+        {obj.name}
+        <button onClick={() => removeFromArray(obj.key)}>Remove</button>
+      </li>)}
+    </ul>
+  </>
+}
+
 function App() {
   const [objArr, setObjArr] = useState<Array<Task>>([]);
   const [task, setTask] = useState("");
@@ -80,28 +102,8 @@ function App() {
         <input type="text" onChange={onChange} value={task} />
         <button type="submit">Add Item</button>
       </form>
-      {activeTodo.length ?
-        <>
-          <h1>Active</h1>
-          <ul>
-            {activeTodo.map((obj, i) => <li key={obj.key}>
-              <input type="checkbox" onChange={() => toggleCompleted(obj.key)} checked={obj.isCompleted} />
-              {obj.name}
-              <button onClick={() => removeFromArray(obj.key)}>Remove</button>
-            </li>)}
-          </ul>
-        </> : null}
-      {completedTodo.length ?
-        <>
-          <h1>Completed</h1>
-          <ul>
-            {completedTodo.map((obj, i) => <li key={obj.key}>
-              <input type="checkbox" onChange={() => toggleCompleted(obj.key)} checked={obj.isCompleted} />
-              {obj.name}
-              <button onClick={() => removeFromArray(obj.key)}>Remove</button>
-            </li>)}
-          </ul>
-        </> : null}
+      <TodoList taskList={activeTodo} sectionName="Active" toggleCompleted={toggleCompleted} removeFromArray={removeFromArray}/>
+      <TodoList taskList={completedTodo} sectionName="Completed" toggleCompleted={toggleCompleted} removeFromArray={removeFromArray}/>
     </div>
   )
 }
