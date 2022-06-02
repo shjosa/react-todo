@@ -4,6 +4,7 @@ import './App.css';
 interface Task {
   key: number;
   name: string;
+  isCompleted: boolean;
 }
 
 function App() {
@@ -14,16 +15,24 @@ function App() {
 
   function addToArray(taskName: string) {
     const newId = id + 1;
-    const tempArr = [...objArr, {key: newId, name: taskName}];
+    const tempArr = [...objArr, {key: newId, name: taskName, isCompleted: false}];
     setObjArr(tempArr);
     setId(newId);
 
     localStorage.setItem("taskList", JSON.stringify(tempArr));
   }
 
-  function removeFromArray (pos: number): void {
+  function removeFromArray(pos: number): void {
     const tempArr = [...objArr];
     tempArr.splice(pos, 1);
+    setObjArr(tempArr);
+
+    localStorage.setItem("taskList", JSON.stringify(tempArr));
+  }
+
+  function toggleCompleted(pos: number): void {
+    const tempArr = [...objArr];
+    tempArr[pos].isCompleted = !tempArr[pos].isCompleted;
     setObjArr(tempArr);
 
     localStorage.setItem("taskList", JSON.stringify(tempArr));
@@ -51,8 +60,9 @@ function App() {
       </form>
       <ul>
         {objArr.map((obj, i) => <li key={obj.key}>
-          <button onClick={() => removeFromArray(i)}>Remove</button>
+          <input type="checkbox" onChange={() => toggleCompleted(i)} checked={obj.isCompleted}/>
           {obj.name}
+          <button onClick={() => removeFromArray(i)}>Remove</button>
         </li>)}
       </ul>
     </div>
