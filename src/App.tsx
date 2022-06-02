@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useMemo} from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import './App.css';
 
 interface Task {
@@ -19,7 +19,7 @@ function App() {
   useEffect(() => {
     const newArr = JSON.parse(localStorage.getItem("taskList") || "[]");
     let highestKey = 0;
-    for(let i = 0; i < newArr.length; i++) {
+    for (let i = 0; i < newArr.length; i++) {
       if (newArr[i].key > highestKey)
         highestKey = newArr[i].key;
     }
@@ -29,7 +29,7 @@ function App() {
 
   function addToArray(taskName: string) {
     const newId = id + 1;
-    const tempArr = [...objArr, {key: newId, name: taskName, isCompleted: false}];
+    const tempArr = [...objArr, { key: newId, name: taskName, isCompleted: false }];
     setObjArr(tempArr);
     setId(newId);
 
@@ -68,22 +68,28 @@ function App() {
         <input type="text" onChange={onChange} value={task} />
         <button type="submit">Add Item</button>
       </form>
-      <h1>Active</h1>
-      <ul>
-        {activeTodo.map((obj, i) => <li key={obj.key}>
-          <input type="checkbox" onChange={() => toggleCompleted(i)} checked={obj.isCompleted}/>
-          {obj.name}
-          <button onClick={() => removeFromArray(i)}>Remove</button>
-        </li>)}
-      </ul>
-      <h1>Completed</h1>
-      <ul>
-        {completedTodo.map((obj, i) => <li key={obj.key}>
-          <input type="checkbox" onChange={() => toggleCompleted(i)} checked={obj.isCompleted}/>
-          {obj.name}
-          <button onClick={() => removeFromArray(i)}>Remove</button>
-        </li>)}
-      </ul>
+      {activeTodo.length ?
+        <>
+          <h1>Active</h1>
+          <ul>
+            {activeTodo.map((obj, i) => <li key={obj.key}>
+              <input type="checkbox" onChange={() => toggleCompleted(i)} checked={obj.isCompleted} />
+              {obj.name}
+              <button onClick={() => removeFromArray(i)}>Remove</button>
+            </li>)}
+          </ul>
+        </> : null}
+      {completedTodo.length ?
+        <>
+          <h1>Completed</h1>
+          <ul>
+            {completedTodo.map((obj, i) => <li key={obj.key}>
+              <input type="checkbox" onChange={() => toggleCompleted(i)} checked={obj.isCompleted} />
+              {obj.name}
+              <button onClick={() => removeFromArray(i)}>Remove</button>
+            </li>)}
+          </ul>
+        </> : null}
     </div>
   )
 }
