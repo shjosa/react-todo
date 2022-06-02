@@ -1,17 +1,30 @@
 import React, {useEffect, useState} from 'react';
 import './App.css';
 
+interface Task {
+  key: number;
+  name: string;
+}
+
 function App() {
-  const [objArr, setObjArr] = useState([{name: "eat", key: 0}, {name: "play elden ring :)", key: 1}, {name: "walk dogs", key: 2}, {name: "read", key: 3}]);
+  const [objArr, setObjArr] = useState<Array<Task>>([]);
   const [task, setTask] = useState("");
   // todo: useRef()
-  const [id, setId] = useState(4);
+  const [id, setId] = useState(0);
 
   function addToArray(taskName: string) {
     const newId = id + 1;
     const tempArr = [...objArr, {key: newId, name: taskName}];
     setObjArr(tempArr);
     setId(newId);
+
+    localStorage.setItem("taskList", JSON.stringify(tempArr));
+  }
+
+  function removeFromArray (pos: number): void {
+    const tempArr = [...objArr];
+    tempArr.splice(pos, 1);
+    setObjArr(tempArr);
 
     localStorage.setItem("taskList", JSON.stringify(tempArr));
   }
@@ -38,6 +51,7 @@ function App() {
       </form>
       <ul>
         {objArr.map((obj, i) => <li key={obj.key}>
+          <button onClick={() => removeFromArray(i)}>Remove</button>
           {obj.name}
         </li>)}
       </ul>
