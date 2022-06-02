@@ -1,43 +1,7 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import './App.css';
-
-const LOCAL_STORAGE_KEY = "taskList";
-
-interface Task {
-  key: number;
-  name: string;
-  isCompleted: boolean;
-}
-
-function getTaskList() {
-  return JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY) || "[]");
-}
-
-function setTaskList(setArray: Array<Task>) {
-  localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(setArray));
-}
-
-interface TodoListProps {
-  taskList: Array<Task>;
-  sectionName: string;
-  toggleCompleted: (key: number) => void;
-  removeFromArray: (key: number) => void;
-}
-
-function TodoList({ taskList, sectionName, toggleCompleted, removeFromArray }: TodoListProps) {
-  if (!taskList.length)
-    return null;
-  return <>
-    <h1>{sectionName}</h1>
-    <ul>
-      {taskList.map((obj, i) => <li key={obj.key}>
-        <input type="checkbox" onChange={() => toggleCompleted(obj.key)} checked={obj.isCompleted} />
-        {obj.name}
-        <button onClick={() => removeFromArray(obj.key)}>Remove</button>
-      </li>)}
-    </ul>
-  </>
-}
+import { TodoList } from './components/todo-list';
+import { Task, getTaskList, setTaskList } from './utils/api';
 
 function App() {
   const [objArr, setObjArr] = useState<Array<Task>>([]);
