@@ -1,10 +1,20 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import './App.css';
 
+const LOCAL_STORAGE_KEY = "taskList";
+
 interface Task {
   key: number;
   name: string;
   isCompleted: boolean;
+}
+
+function getTaskList() {
+  return JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY) || "[]");
+}
+
+function setTaskList(setArray: Array<Task>) {
+  localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(setArray));
 }
 
 function App() {
@@ -17,7 +27,7 @@ function App() {
   const completedTodo = useMemo(() => objArr.filter(task => task.isCompleted), [objArr]);
 
   useEffect(() => {
-    const newArr = JSON.parse(localStorage.getItem("taskList") || "[]");
+    const newArr = getTaskList();
     let highestKey = 0;
     for (let i = 0; i < newArr.length; i++) {
       if (newArr[i].key > highestKey)
@@ -33,7 +43,7 @@ function App() {
     setObjArr(tempArr);
     setId(newId);
 
-    localStorage.setItem("taskList", JSON.stringify(tempArr));
+    setTaskList(tempArr);
   }
 
   function removeFromArray(key: number): void {
@@ -42,7 +52,7 @@ function App() {
     tempArr.splice(pos, 1);
     setObjArr(tempArr);
 
-    localStorage.setItem("taskList", JSON.stringify(tempArr));
+    setTaskList(tempArr);
   }
 
   function toggleCompleted(key: number): void {
@@ -51,7 +61,7 @@ function App() {
     tempArr[pos].isCompleted = !tempArr[pos].isCompleted;
     setObjArr(tempArr);
 
-    localStorage.setItem("taskList", JSON.stringify(tempArr));
+    setTaskList(tempArr);
   }
 
   const onChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
