@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useMemo} from 'react';
 import './App.css';
 
 interface Task {
@@ -12,6 +12,20 @@ function App() {
   const [task, setTask] = useState("");
   // todo: useRef()
   const [id, setId] = useState(0);
+
+  const activeTodo = useMemo(() => objArr.filter(task => !task.isCompleted), [objArr]);
+  const completedTodo = useMemo(() => objArr.filter(task => task.isCompleted), [objArr]);
+
+  useEffect(() => {
+    const newArr = JSON.parse(localStorage.getItem("taskList") || "[]");
+    let highestKey = 0;
+    for(let i = 0; i < newArr.length; i++) {
+      if (newArr[i].key > highestKey)
+        highestKey = newArr[i].key;
+    }
+    setId(highestKey + 1);
+    setObjArr(newArr);
+  }, []);
 
   function addToArray(taskName: string) {
     const newId = id + 1;
@@ -48,25 +62,23 @@ function App() {
     setTask("");
   }
 
-  useEffect(() => {
-    const newArr = JSON.parse(localStorage.getItem("taskList") || "[]");
-    let highestKey = 0;
-    for(let i = 0; i < newArr.length; i++) {
-      if (newArr[i].key > highestKey)
-        highestKey = newArr[i].key;
-    }
-    setId(highestKey + 1);
-    setObjArr(newArr);
-  }, []);
-
   return (
     <div>
       <form onSubmit={onSubmit}>
         <input type="text" onChange={onChange} value={task} />
         <button type="submit">Add Item</button>
       </form>
+      <h1>Active</h1>
       <ul>
-        {objArr.map((obj, i) => <li key={obj.key}>
+        {activeTodo.map((obj, i) => <li key={obj.key}>
+          <input type="checkbox" onChange={() => toggleCompleted(i)} checked={obj.isCompleted}/>
+          {obj.name}
+          <button onClick={() => removeFromArray(i)}>Remove</button>
+        </li>)}
+      </ul>
+      <h1>Completed</h1>
+      <ul>
+        {completedTodo.map((obj, i) => <li key={obj.key}>
           <input type="checkbox" onChange={() => toggleCompleted(i)} checked={obj.isCompleted}/>
           {obj.name}
           <button onClick={() => removeFromArray(i)}>Remove</button>
