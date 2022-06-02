@@ -49,7 +49,14 @@ function App() {
   }
 
   useEffect(() => {
-    setObjArr(JSON.parse(localStorage.getItem("taskList") || "[]"));
+    const newArr = JSON.parse(localStorage.getItem("taskList") || "[]");
+    let highestKey = 0;
+    for(let i = 0; i < newArr.length; i++) {
+      if (newArr[i].key > highestKey)
+        highestKey = newArr[i].key;
+    }
+    setId(highestKey + 1);
+    setObjArr(newArr);
   }, []);
 
   return (
