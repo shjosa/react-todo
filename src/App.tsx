@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import './App.css';
 
 function App() {
@@ -9,8 +9,11 @@ function App() {
 
   function addToArray(taskName: string) {
     const newId = id + 1;
-    setObjArr([...objArr, {key: newId, name: taskName}]);
+    const tempArr = [...objArr, {key: newId, name: taskName}];
+    setObjArr(tempArr);
     setId(newId);
+
+    localStorage.setItem("taskList", JSON.stringify(tempArr));
   }
 
   const onChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
@@ -22,6 +25,10 @@ function App() {
     addToArray(task);
     setTask("");
   }
+
+  useEffect(() => {
+    setObjArr(JSON.parse(localStorage.getItem("taskList") || "[]"));
+  }, []);
 
   return (
     <div>
