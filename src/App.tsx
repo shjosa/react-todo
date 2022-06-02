@@ -36,16 +36,18 @@ function App() {
     localStorage.setItem("taskList", JSON.stringify(tempArr));
   }
 
-  function removeFromArray(pos: number): void {
+  function removeFromArray(key: number): void {
     const tempArr = [...objArr];
+    const pos = tempArr.findIndex(task => task.key === key);
     tempArr.splice(pos, 1);
     setObjArr(tempArr);
 
     localStorage.setItem("taskList", JSON.stringify(tempArr));
   }
 
-  function toggleCompleted(pos: number): void {
+  function toggleCompleted(key: number): void {
     const tempArr = [...objArr];
+    const pos = tempArr.findIndex(task => task.key === key);
     tempArr[pos].isCompleted = !tempArr[pos].isCompleted;
     setObjArr(tempArr);
 
@@ -73,9 +75,9 @@ function App() {
           <h1>Active</h1>
           <ul>
             {activeTodo.map((obj, i) => <li key={obj.key}>
-              <input type="checkbox" onChange={() => toggleCompleted(i)} checked={obj.isCompleted} />
+              <input type="checkbox" onChange={() => toggleCompleted(obj.key)} checked={obj.isCompleted} />
               {obj.name}
-              <button onClick={() => removeFromArray(i)}>Remove</button>
+              <button onClick={() => removeFromArray(obj.key)}>Remove</button>
             </li>)}
           </ul>
         </> : null}
@@ -84,9 +86,9 @@ function App() {
           <h1>Completed</h1>
           <ul>
             {completedTodo.map((obj, i) => <li key={obj.key}>
-              <input type="checkbox" onChange={() => toggleCompleted(i)} checked={obj.isCompleted} />
+              <input type="checkbox" onChange={() => toggleCompleted(obj.key)} checked={obj.isCompleted} />
               {obj.name}
-              <button onClick={() => removeFromArray(i)}>Remove</button>
+              <button onClick={() => removeFromArray(obj.key)}>Remove</button>
             </li>)}
           </ul>
         </> : null}
