@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState, useMemo, useRef } from 'react';
 import './App.css';
 import { TodoList } from './components/todo-list';
 import { Task, getTaskList, setTaskList } from './utils/api';
@@ -6,8 +6,7 @@ import { Task, getTaskList, setTaskList } from './utils/api';
 function App() {
   const [objArr, setObjArr] = useState<Array<Task>>([]);
   const [task, setTask] = useState("");
-  // todo: useRef()
-  const [id, setId] = useState(0);
+  const id = useRef(0);
 
   const activeTodo = useMemo(() => objArr.filter(task => !task.isCompleted), [objArr]);
   const completedTodo = useMemo(() => objArr.filter(task => task.isCompleted), [objArr]);
@@ -19,15 +18,15 @@ function App() {
       if (newArr[i].key > highestKey)
         highestKey = newArr[i].key;
     }
-    setId(highestKey + 1);
+    id.current = highestKey + 1;
     setObjArr(newArr);
   }, []);
 
   function addToArray(taskName: string) {
-    const newId = id + 1;
+    const newId = id.current + 1;
     const tempArr = [...objArr, { key: newId, name: taskName, isCompleted: false }];
     setObjArr(tempArr);
-    setId(newId);
+    id.current = newId;
 
     setTaskList(tempArr);
   }
