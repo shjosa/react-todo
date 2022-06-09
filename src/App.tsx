@@ -61,6 +61,7 @@ function App() {
     e.preventDefault();
     addToArray(task);
     setTask("");
+    handleClose();
   }
 
   const handleOpen = () => setOpen(true);
@@ -76,6 +77,11 @@ function App() {
     border: '2px solid #000',
     boxShadow: 24,
     p: 4,
+  };
+
+  const styleSubmit = {
+    float: 'right',
+    top: '10px',
   };
 
   return (
@@ -99,7 +105,7 @@ function App() {
         >
           <Typography>Add a new item</Typography>
           <TextField fullWidth onChange={onChange} value={task}></TextField>
-          <Fab color="primary" type="submit">
+          <Fab color="primary" type="submit" sx={styleSubmit}>
             <AddIcon />
           </Fab>
         </Box>
