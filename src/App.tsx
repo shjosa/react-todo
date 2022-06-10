@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo, useRef } from 'react';
-import { AppBar, Toolbar, Fab, Modal, Box, Typography, TextField } from '@mui/material';
+import { AppBar, Toolbar, Fab, Modal, Box, Typography, TextField, Grid } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
 import './App.css';
@@ -84,6 +84,11 @@ function App() {
     top: '10px',
   };
 
+  const boxStyle = {
+    bgcolor: 'lightblue',
+    borderRadius: '20px',
+  };
+
   return (
     <div>
       <AppBar color="secondary">
@@ -105,7 +110,7 @@ function App() {
         >
           <Typography>Add a new item</Typography>
           <TextField fullWidth onChange={onChange} value={task}></TextField>
-          <Fab color="primary" type="submit" sx={styleSubmit}>
+          <Fab color="warning" type="submit" sx={styleSubmit}>
             <AddIcon />
           </Fab>
         </Box>
@@ -113,14 +118,14 @@ function App() {
       <br/>
       <br/>
       <br/>
-      {/*
-      <form onSubmit={onSubmit}>
-        <input type="text" onChange={onChange} value={task} />
-        <button type="submit">Add Item</button>
-      </form>
-      */}
-      <TodoList taskList={activeTodo} sectionName="Active" toggleCompleted={toggleCompleted} removeFromArray={removeFromArray}/>
-      <TodoList taskList={completedTodo} sectionName="Completed" toggleCompleted={toggleCompleted} removeFromArray={removeFromArray}/>
+      <Grid container>
+        <Grid item xs={6} sx={boxStyle}>
+          <TodoList taskList={activeTodo} sectionName="Active" toggleCompleted={toggleCompleted} removeFromArray={removeFromArray}/>
+        </Grid>
+        <Grid item xs={6} sx={boxStyle}>
+          <TodoList taskList={completedTodo} sectionName="Completed" toggleCompleted={toggleCompleted} removeFromArray={removeFromArray}/>
+        </Grid>
+      </Grid>
     </div>
   )
 }

@@ -1,4 +1,6 @@
 import { Task } from '../utils/api';
+import { Box, Typography, List, ListItemButton, ListItem, ListItemIcon, ListItemText, Checkbox, IconButton } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 interface TodoListProps {
     taskList: Array<Task>;
@@ -11,13 +13,30 @@ export function TodoList({ taskList, sectionName, toggleCompleted, removeFromArr
     if (!taskList.length)
         return null;
     return <>
-        <h1>{sectionName}</h1>
-        <ul>
-            {taskList.map((obj, i) => <li key={obj.key}>
-                <input type="checkbox" onChange={() => toggleCompleted(obj.key)} checked={obj.isCompleted} />
-                {obj.name}
-                <button onClick={() => removeFromArray(obj.key)}>Remove</button>
-            </li>)}
-        </ul>
+        <Box>
+            <Typography variant="h2">{sectionName}</Typography>
+            <List>
+                {taskList.map((obj, i) =>
+                    <ListItem 
+                        key={obj.key}
+                        secondaryAction={
+                            <IconButton edge="end" onClick={() => removeFromArray(obj.key)}>
+                                <DeleteIcon/>
+                            </IconButton>
+                        }
+                    >
+                        <ListItemButton onClick={() => toggleCompleted(obj.key)}>
+                            <ListItemIcon>
+                                <Checkbox
+                                    edge="start"
+                                    checked={obj.isCompleted}
+                                />
+                            </ListItemIcon>
+                            <ListItemText primary={obj.name}/>
+                        </ListItemButton>
+                    </ListItem>
+                )}
+            </List>
+        </Box>
     </>
 }
