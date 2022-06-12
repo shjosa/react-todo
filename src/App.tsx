@@ -3,12 +3,13 @@ import { AppBar, Toolbar, Fab, Modal, Box, Typography, TextField, Grid, Paper, C
 import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
 import './App.css';
-import { TodoList } from './components/todo-list';
+import { TodoListCard } from './components/todo-list-card';
 import { Task, getTaskList, setTaskList } from './utils/api';
+import { Header } from './components/header';
+import { NewTodoDialog } from './components/new-todo-dialog';
 
 function App() {
   const [objArr, setObjArr] = useState<Array<Task>>([]);
-  const [task, setTask] = useState("");
   const [open, setOpen] = useState(false);
   const id = useRef(0);
 
@@ -53,78 +54,19 @@ function App() {
     setTaskList(tempArr);
   }
 
-  const onChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
-    setTask(e.target.value);
-  }
-
-  const onSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
-    e.preventDefault();
-    addToArray(task);
-    setTask("");
-    handleClose();
-  }
-
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const style = {
-    position: 'absolute' as 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 400,
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
-    boxShadow: 24,
-    p: 4,
-  };
-
-  const styleSubmit = {
-    float: 'right',
-    top: '10px',
-  };
-
   return (
     <div>
-      <AppBar color="primary" position="static">
-        <Toolbar>
-          <Typography variant="h6" color="inherit" component="div">
-            React Todo
-          </Typography>
-        </Toolbar>
-      </AppBar>
-      <Dialog
-        open={open}
-        onClose={handleClose}
-      >
-        <form onSubmit={onSubmit}>
-        <DialogTitle>
-          Add a new item
-        </DialogTitle>
-        <DialogContent>
-          <TextField fullWidth onChange={onChange} value={task}></TextField>
-        </DialogContent>
-        <DialogActions>
-          <Button variant="outlined" type="submit">Create</Button>
-        </DialogActions>
-        </form>
-      </Dialog>
+      <Header>React Todo</Header>
+      <NewTodoDialog open={open} handleClose={handleClose} addToArray={addToArray} dialogTitle="Add a task" buttonText="Add Task" />
       <Grid container direction="column" spacing={2} p={2}>
         <Grid item xs={6}>
-          <Card variant="outlined">
-            <CardHeader title="Active" />
-            <CardContent>
-              <TodoList taskList={activeTodo} toggleCompleted={toggleCompleted} removeFromArray={removeFromArray} />
-            </CardContent>
-          </Card>
+          <TodoListCard taskList={activeTodo} title="Active" toggleCompleted={toggleCompleted} removeFromArray={removeFromArray} />
         </Grid>
         <Grid item xs={6}>
-          <Card variant="outlined">
-            <CardHeader title="Completed" />
-            <CardContent>
-              <TodoList taskList={completedTodo} toggleCompleted={toggleCompleted} removeFromArray={removeFromArray} />
-            </CardContent>
-          </Card>
+          <TodoListCard taskList={completedTodo} title="Completed" toggleCompleted={toggleCompleted} removeFromArray={removeFromArray} />
         </Grid>
       </Grid>
       <Fab color="secondary" onClick={handleOpen} sx={{ position: "fixed", bottom: 16, right: 16 }}>
