@@ -14,7 +14,7 @@ export function TodoListCard({ taskList, title, toggleCompleted, removeFromArray
         return null;
     return (
         <Card variant="outlined">
-            <CardHeader title="Active" />
+            <CardHeader title={title} />
             <CardContent>
                 <List sx={{ padding: 0 }}>
                     {taskList.map((obj, i) =>
