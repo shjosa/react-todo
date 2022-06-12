@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo, useRef } from 'react';
-import { AppBar, Toolbar, Fab, Modal, Box, Typography, TextField, Grid } from '@mui/material';
+import { AppBar, Toolbar, Fab, Modal, Box, Typography, TextField, Grid, Paper, Card, CardHeader, CardContent, Button, Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
 import './App.css';
@@ -84,46 +84,47 @@ function App() {
     top: '10px',
   };
 
-  const boxStyle = {
-    bgcolor: 'lightblue',
-    borderRadius: '20px',
-  };
-
   return (
     <div>
-      <AppBar color="primary">
+      <AppBar color="primary" position="static">
         <Toolbar>
           <Typography variant="h6" color="inherit" component="div">
             React Todo
           </Typography>
         </Toolbar>
       </AppBar>
-      <Modal
-        keepMounted
+      <Dialog
         open={open}
         onClose={handleClose}
       >
-        <Box
-          sx={style}
-          component="form"
-          onSubmit={onSubmit}
-        >
-          <Typography>Add a new item</Typography>
+        <form onSubmit={onSubmit}>
+        <DialogTitle>
+          Add a new item
+        </DialogTitle>
+        <DialogContent>
           <TextField fullWidth onChange={onChange} value={task}></TextField>
-          <Fab color="secondary" type="submit" sx={styleSubmit}>
-            <AddIcon />
-          </Fab>
-        </Box>
-      </Modal>
-      <br />
-      <br />
-      <br />
-      <Grid container>
-        <Grid item xs={6} sx={boxStyle}>
-          <TodoList taskList={activeTodo} sectionName="Active" toggleCompleted={toggleCompleted} removeFromArray={removeFromArray} />
+        </DialogContent>
+        <DialogActions>
+          <Button variant="outlined" type="submit">Create</Button>
+        </DialogActions>
+        </form>
+      </Dialog>
+      <Grid container direction="column" spacing={2} p={2}>
+        <Grid item xs={6}>
+          <Card variant="outlined">
+            <CardHeader title="Active" />
+            <CardContent>
+              <TodoList taskList={activeTodo} toggleCompleted={toggleCompleted} removeFromArray={removeFromArray} />
+            </CardContent>
+          </Card>
         </Grid>
-        <Grid item xs={6} sx={boxStyle}>
-          <TodoList taskList={completedTodo} sectionName="Completed" toggleCompleted={toggleCompleted} removeFromArray={removeFromArray} />
+        <Grid item xs={6}>
+          <Card variant="outlined">
+            <CardHeader title="Completed" />
+            <CardContent>
+              <TodoList taskList={completedTodo} toggleCompleted={toggleCompleted} removeFromArray={removeFromArray} />
+            </CardContent>
+          </Card>
         </Grid>
       </Grid>
       <Fab color="secondary" onClick={handleOpen} sx={{ position: "fixed", bottom: 16, right: 16 }}>
