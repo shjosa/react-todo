@@ -91,11 +91,11 @@ function App() {
 
   return (
     <div>
-      <AppBar color="secondary">
+      <AppBar color="primary">
         <Toolbar>
-          <Fab color="warning" onClick={handleOpen}>
-            <EditIcon />
-          </Fab>
+          <Typography variant="h6" color="inherit" component="div">
+            React Todo
+          </Typography>
         </Toolbar>
       </AppBar>
       <Modal
@@ -103,29 +103,32 @@ function App() {
         open={open}
         onClose={handleClose}
       >
-        <Box 
+        <Box
           sx={style}
           component="form"
           onSubmit={onSubmit}
         >
           <Typography>Add a new item</Typography>
           <TextField fullWidth onChange={onChange} value={task}></TextField>
-          <Fab color="warning" type="submit" sx={styleSubmit}>
+          <Fab color="secondary" type="submit" sx={styleSubmit}>
             <AddIcon />
           </Fab>
         </Box>
       </Modal>
-      <br/>
-      <br/>
-      <br/>
+      <br />
+      <br />
+      <br />
       <Grid container>
         <Grid item xs={6} sx={boxStyle}>
-          <TodoList taskList={activeTodo} sectionName="Active" toggleCompleted={toggleCompleted} removeFromArray={removeFromArray}/>
+          <TodoList taskList={activeTodo} sectionName="Active" toggleCompleted={toggleCompleted} removeFromArray={removeFromArray} />
         </Grid>
         <Grid item xs={6} sx={boxStyle}>
-          <TodoList taskList={completedTodo} sectionName="Completed" toggleCompleted={toggleCompleted} removeFromArray={removeFromArray}/>
+          <TodoList taskList={completedTodo} sectionName="Completed" toggleCompleted={toggleCompleted} removeFromArray={removeFromArray} />
         </Grid>
       </Grid>
+      <Fab color="secondary" onClick={handleOpen} sx={{ position: "fixed", bottom: 16, right: 16 }}>
+        <AddIcon />
+      </Fab>
     </div>
   )
 }
