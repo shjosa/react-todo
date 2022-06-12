@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useMemo, useRef } from 'react';
-import { AppBar, Toolbar, Fab, Modal, Box, Typography, TextField, Grid, Paper, Card, CardHeader, CardContent, Button, Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
+import { Fab, Grid } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
-import EditIcon from '@mui/icons-material/Edit';
 import './App.css';
 import { TodoListCard } from './components/todo-list-card';
 import { Task, getTaskList, setTaskList } from './utils/api';
