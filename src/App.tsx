@@ -61,12 +61,8 @@ function App() {
       <Header>React Todo</Header>
       <NewTodoDialog open={open} handleClose={handleClose} addToArray={addToArray} dialogTitle="Add a task" buttonText="Add Task" />
       <Grid container direction="column" spacing={2} p={2}>
-        <Grid item xs={6}>
-          <TodoListCard taskList={activeTodo} title="Active" toggleCompleted={toggleCompleted} removeFromArray={removeFromArray} />
-        </Grid>
-        <Grid item xs={6}>
-          <TodoListCard taskList={completedTodo} title="Completed" toggleCompleted={toggleCompleted} removeFromArray={removeFromArray} />
-        </Grid>
+        <TodoListCard taskList={activeTodo} title="Active" toggleCompleted={toggleCompleted} removeFromArray={removeFromArray} />
+        <TodoListCard taskList={completedTodo} title="Completed" toggleCompleted={toggleCompleted} removeFromArray={removeFromArray} />
       </Grid>
       <Fab color="secondary" onClick={handleOpen} sx={{ position: "fixed", bottom: 16, right: 16 }}>
         <AddIcon />
