@@ -6,8 +6,8 @@ export interface Task {
   isCompleted: boolean;
 }
 
-export function getTaskList() {
-  return JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY) || "[]");
+export function getTaskList(initialString: string="[]") {
+  return JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY) || initialString);
 }
 
 export function setTaskList(setArray: Array<Task>) {

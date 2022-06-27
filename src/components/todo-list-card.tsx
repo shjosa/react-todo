@@ -7,9 +7,10 @@ interface TodoListProps {
     title: string;
     toggleCompleted: (key: number) => void;
     removeFromArray: (key: number) => void;
+    testid: string;
 }
 
-export function TodoListCard({ taskList, title, toggleCompleted, removeFromArray }: TodoListProps) {
+export function TodoListCard({ taskList, title, toggleCompleted, removeFromArray, testid }: TodoListProps) {
     if (!taskList.length)
         return null;
     return (
@@ -17,7 +18,7 @@ export function TodoListCard({ taskList, title, toggleCompleted, removeFromArray
             <Card variant="outlined">
                 <CardHeader title={title} />
                 <CardContent>
-                    <List sx={{ padding: 0 }}>
+                    <List sx={{ padding: 0 }} data-testid={testid}>
                         {taskList.map((obj, i) =>
                             <ListItem
                                 sx={{ padding: 0 }}
