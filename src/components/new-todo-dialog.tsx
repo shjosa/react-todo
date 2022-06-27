@@ -5,11 +5,12 @@ export interface NewTodoProps {
     open: boolean;
     handleClose: () => void;
     addToArray: (task: string) => void;
-    dialogTitle: string,
-    buttonText: string
+    dialogTitle: string;
+    buttonText: string;
+    inputLabel: string;
 }
 
-export function NewTodoDialog({ open, handleClose, addToArray, dialogTitle, buttonText }: NewTodoProps) {
+export function NewTodoDialog({ open, handleClose, addToArray, dialogTitle, buttonText, inputLabel }: NewTodoProps) {
     const [task, setTask] = useState("");
 
     const onChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
@@ -37,7 +38,7 @@ export function NewTodoDialog({ open, handleClose, addToArray, dialogTitle, butt
                     {dialogTitle}
                 </DialogTitle>
                 <DialogContent>
-                    <TextField fullWidth onChange={onChange} value={task}></TextField>
+                    <TextField fullWidth onChange={onChange} value={task} label={inputLabel} />
                 </DialogContent>
                 <DialogActions>
                     <Button variant="outlined" type="submit">{buttonText}</Button>

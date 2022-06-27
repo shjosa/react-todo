@@ -59,12 +59,12 @@ function App() {
   return (
     <div>
       <Header>React Todo</Header>
-      <NewTodoDialog open={open} handleClose={handleClose} addToArray={addToArray} dialogTitle="Add a task" buttonText="Add Task" />
+      <NewTodoDialog open={open} handleClose={handleClose} addToArray={addToArray} dialogTitle="Add a task" buttonText="Add Task" inputLabel="task name" />
       <Grid container direction="column" spacing={2} p={2}>
         <TodoListCard taskList={activeTodo} title="Active" toggleCompleted={toggleCompleted} removeFromArray={removeFromArray} />
         <TodoListCard taskList={completedTodo} title="Completed" toggleCompleted={toggleCompleted} removeFromArray={removeFromArray} />
       </Grid>
-      <Fab color="secondary" onClick={handleOpen} sx={{ position: "fixed", bottom: 16, right: 16 }}>
+      <Fab color="secondary" onClick={handleOpen} sx={{ position: "fixed", bottom: 16, right: 16 }} aria-label={'add a to-do'}>
         <AddIcon />
       </Fab>
     </div>
