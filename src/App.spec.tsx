@@ -16,13 +16,13 @@ test('adding a task', async () => {
     fireEvent.click(addTaskButton);
     expect(screen.getByText('Add a task')).toBeInTheDocument();
     const taskNameInput = screen.getByLabelText("task name");
-    user.type(taskNameInput, 'Play Elden Ring');
+    await user.type(taskNameInput, 'Play Elden Ring');
     const inputTaskButton = screen.getByText("Add Task");
     fireEvent.click(inputTaskButton);
     await waitFor(() => expect(screen.getByText('Play Elden Ring')).toBeInTheDocument());
 })
 
-test.only('set task completed', async () => {
+test.skip('set task completed', async () => {
     const user = userEvent.setup();
     render(<App initialObjArr={[{ key: 0, name: "Eat", isCompleted: false }]}/>);
     const activeListEl = screen.getByTestId('active');
@@ -34,4 +34,3 @@ test.only('set task completed', async () => {
 
 test.todo('remove a task');
 test.todo('set task uncompleted');
-test.todo('tasks persist after reload');
