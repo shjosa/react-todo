@@ -15,3 +15,4 @@ This is a simple React application that I built to keep track of tasks.
 - [Create React App](https://create-react-app.dev/)
 - [TypeScript](https://www.typescriptlang.org/)
 - [Material-UI](https://mui.com/)
+- [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/)
