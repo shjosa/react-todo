@@ -24,7 +24,7 @@ export function TodoListCard({ taskList, title, toggleCompleted, removeFromArray
                                 sx={{ padding: 0 }}
                                 key={obj.key}
                                 secondaryAction={
-                                    <IconButton edge="end" onClick={() => removeFromArray(obj.key)}>
+                                    <IconButton edge="end" onClick={() => removeFromArray(obj.key)} aria-label={"remove " + obj.name}>
                                         <DeleteIcon />
                                     </IconButton>
                                 }

@@ -22,7 +22,15 @@ test('adding a task', async () => {
     await waitFor(() => expect(screen.getByText('Play Elden Ring')).toBeInTheDocument());
 })
 
-test.skip('set task completed', async () => {
+test.only('remove a task', async () => {
+  render(<App initialObjArr={[{ key: 0, name: "Read", isCompleted: false }]}/>);
+  await waitFor(() => expect(screen.getByText("Read")).toBeInTheDocument());
+  const removeButton = screen.getByLabelText("remove Read");
+  fireEvent.click(removeButton);
+  await waitFor(() => expect(screen.queryByText("Read")).not.toBeInTheDocument());
+})
+
+test('set task completed', async () => {
     const user = userEvent.setup();
     render(<App initialObjArr={[{ key: 0, name: "Eat", isCompleted: false }]}/>);
     const activeListEl = screen.getByTestId('active');
@@ -32,5 +40,4 @@ test.skip('set task completed', async () => {
     await waitFor(() => expect(getByText(completedListEl, "Eat")).toBeInTheDocument());
 })
 
-test.todo('remove a task');
 test.todo('set task uncompleted');
