@@ -2,7 +2,7 @@ import { Task } from '../utils/api';
 import { Card, CardHeader, CardContent, List, ListItemButton, ListItem, ListItemIcon, ListItemText, Checkbox, IconButton, Grid } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-interface TodoListProps {
+export interface TodoListProps {
     taskList: Array<Task>;
     title: string;
     toggleCompleted: (key: number) => void;
